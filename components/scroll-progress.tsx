@@ -1,29 +1,23 @@
 "use client";
 
-import { useScroll, useTransform } from "motion/react";
-import { useEffect, useRef } from "react";
+import { motion, useScroll, useSpring } from "motion/react";
 
+/**
+ * A thin, cinematic scroll-progress bar pinned to the top of the viewport.
+ */
 export function ScrollProgress() {
-  const container = useRef<HTMLDivElement>(null);
-  const progress = useTransform(
-    useScroll({ container: container }),
-    [0, 1],
-    [0, 1]
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 30,
+    mass: 0.3,
+  });
+
+  return (
+    <motion.div
+      aria-hidden
+      style={{ scaleX }}
+      className="fixed inset-x-0 top-0 z-[9999] h-[3px] origin-left bg-gradient-to-r from-transparent via-[#ff2a6d] to-[#ff2a6d]"
+    />
   );
-
-  useEffect(() => {
-    const el = container.current;
-    if (!el) return;
-    el.style.overflow = "hidden";
-    el.style.position = "fixed";
-    el.style.top = "0px";
-    el.style.left = "0px";
-    el.style.width = "100%";
-    el.style.height = "3px";
-    el.style.zIndex = "9999";
-    el.style.pointerEvents = "none";
-    el.style.background = "linear-gradient(90deg, transparent, #ff2a6d)";
-  }, []);
-
-  return <div ref={container} className="progress-bar" />;
 }
