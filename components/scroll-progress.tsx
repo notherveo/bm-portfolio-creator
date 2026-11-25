@@ -16,8 +16,8 @@ export function ScrollProgress() {
     if (!el) return;
     el.style.overflow = "hidden";
     el.style.position = "fixed";
-    el.style.top = 0;
-    el.style.left = 0;
+    el.style.top = "0px";
+    el.style.left = "0px";
     el.style.width = "100%";
     el.style.height = "3px";
     el.style.zIndex = "9999";
