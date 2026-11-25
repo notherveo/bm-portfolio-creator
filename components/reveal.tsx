@@ -1,4 +1,5 @@
 "use client";
+import * as React from "react";
 
 import { useInView } from "motion/react";
 import { useEffect, useRef } from "react";
